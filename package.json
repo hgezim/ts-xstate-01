@@ -4,6 +4,7 @@
   "description": "You can fork this sandbox to create a reproduction for XState issues.",
   "main": "index.html",
   "scripts": {
+    "typegen": "xstate typegen \"./src/**/*.ts?(x)\"",
     "start": "parcel index.html --open",
     "build": "parcel build index.html"
   },
@@ -12,7 +13,9 @@
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
-    "parcel-bundler": "^1.6.1"
+    "@xstate/cli": "^0.4.2",
+    "parcel-bundler": "^1.6.1",
+    "typescript": "^5.0.4"
   },
   "keywords": []
 }

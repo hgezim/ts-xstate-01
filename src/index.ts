@@ -1,5 +1,6 @@
 import { createMachine, interpret } from "xstate";
 import "./styles.css";
+import { anotherMachine } from "./anotherMachine";
 
 document.getElementById("app").innerHTML = `
 <h1>XState TypeScript Example</h1>
@@ -17,9 +18,10 @@ type ToggleEvent = {
 };
 
 // Edit your machine(s) here
-const machine = createMachine<ToggleContext, ToggleEvent>({
+const machine = createMachine({
   id: "machine",
   initial: "inactive",
+  tsTypes: {} as import("./index.typegen").Typegen0,
   context: {
     count: 0
   },
@@ -29,8 +31,24 @@ const machine = createMachine<ToggleContext, ToggleEvent>({
     },
     active: {
       on: { TOGGLE: "inactive" }
-    }
+    },
+    authenticated: {
+      // ...
+      states: {
+      generatingImage: {
+        invoke: {
+          id: "anotherMachine",
+          src: anotherMachine,
+          data: {
+            finalResultSentToApi: false,
+            retries: 0,
+            error: undefined,
+          },
+        },
+      },
+    },
   }
+}
 });
 
 // Edit your service(s) here
